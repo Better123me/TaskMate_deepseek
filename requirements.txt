@@ -1,0 +1,8 @@
+langchain>=0.1.0
+langchain-mcp-adapters>=0.1.0
+langchain-deepseek>=0.1.0
+python-dotenv>=1.0.0
+streamlit>=1.28.0
+mcp>=1.0.0
+dida365>=1.0.0
+httpx>=0.24.0

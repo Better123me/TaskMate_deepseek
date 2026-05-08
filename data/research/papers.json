@@ -1,0 +1,26 @@
+{
+  "papers": [
+    {
+      "title": "Advances in Flexible Robotic Manipulator Systems—Part I: Overview and Dynamics Modeling Methods",
+      "authors": [
+        "Bai Li",
+        "Xinyuan Li",
+        "Hejia Gao"
+      ],
+      "abstract": "Flexible robotic manipulators (FRMs) exhibit advantages over traditional rigid-body manipulators, including lower energy consumption, faster response, enhanced safety, reduced spatial footprint, and greater payload-to-weight ratio.",
+      "arxiv_id": "",
+      "doi": "10.1109/TMECH.2024.3359067",
+      "url": "",
+      "pdf_url": "",
+      "published_date": "2024",
+      "notes": "柔性机械臂系统的综述文章，包含动力学建模方法概述",
+      "read_status": "unread",
+      "summary": "",
+      "added_at": "2026-05-07T10:25:49.860094"
+    }
+  ]
+}"",
+      "added_at": "2026-05-07T10:25:49.858027"
+    }
+  ]
+}

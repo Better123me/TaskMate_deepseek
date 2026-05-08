@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskMate - AI 科研助手</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #171717;
+      --bg-tertiary: #262626;
+      --bg-hover: #2a2a2a;
+      --text-primary: #e5e5e5;
+      --text-secondary: #a3a3a3;
+      --text-muted: #737373;
+      --border-color: #404040;
+      --accent-color: #10a37f;
+      --accent-hover: #1a7f64;
+      --user-msg-bg: #2f2f2f;
+      --ai-msg-bg: #171717;
+      --error-color: #ef4444;
+      --analysis-bg: #1e1e2e;
+      --analysis-border: #6366f1;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .new-chat-btn {
+      padding: 8px 16px;
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+
+    .new-chat-btn:hover {
+      background-color: var(--accent-hover);
+    }
+
+    #chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message {
+      display: flex;
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .message.user {
+      flex-direction: row-reverse;
+    }
+
+    .message-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .message.user .message-icon {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .message.assistant .message-icon {
+      background: var(--accent-color);
+    }
+
+    .message-content {
+      flex: 1;
+      background-color: var(--user-msg-bg);
+      border-radius: 12px;
+      padding: 12px 16px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.6;
+    }
+
+    .message.assistant .message-content {
+      background-color: var(--ai-msg-bg);
+      border: 1px solid var(--border-color);
+    }
+
+    .message-content pre {
+      background-color: var(--bg-tertiary);
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 8px 0;
+    }
+
+    .message-content code {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 13px;
+    }
+
+    .message-content p code {
+      background-color: var(--bg-tertiary);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .message-content ul, .message-content ol {
+      margin: 8px 0;
+      padding-left: 24px;
+    }
+
+    .message-content a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    .message-content a:hover {
+      text-decoration: underline;
+    }
+
+    .ai-message-card {
+      flex: 1;
+      background-color: var(--ai-msg-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .thinking-section {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .thinking-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background-color: var(--bg-tertiary);
+      cursor: pointer;
+      user-select: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .thinking-header:hover {
+      background-color: var(--bg-hover);
+    }
+
+    .thinking-header .toggle-icon {
+      transition: transform 0.2s;
+    }
+
+    .thinking-header.collapsed .toggle-icon {
+      transform: rotate(-90deg);
+    }
+
+    .thinking-content {
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .thinking-content.hidden {
+      display: none;
+    }
+
+    .content-section {
+      padding: 12px 16px;
+    }
+
+    .content-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .content-body {
+      font-size: 15px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .content-body.hidden {
+      display: none;
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 8px 16px;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      background-color: var(--text-muted);
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+      }
+      30% {
+        transform: translateY(-4px);
+        opacity: 1;
+      }
+    }
+
+    .library-panel {
+      position: fixed;
+      top: 0;
+      right: -600px;
+      width: 600px;
+      height: 100vh;
+      background-color: var(--bg-secondary);
+      border-left: 2px solid var(--border-color);
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .library-panel.show {
+      right: 0;
+    }
+
+    .library-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-tertiary);
+    }
+
+    .library-panel-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .library-close-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .library-close-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .library-toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .library-search {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--input-bg);
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    .library-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+    }
+
+    .library-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      margin-bottom: 8px;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s;
+    }
+
+    .library-item:hover {
+      background: var(--hover-bg);
+      border-color: #6366f1;
+    }
+
+    .library-item-icon {
+      font-size: 24px;
+      margin-right: 12px;
+    }
+
+    .library-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .library-item-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .library-item-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .library-item-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .library-action-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 4px;
+      font-size: 16px;
+    }
+
+    .library-action-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .context-menu {
+      position: fixed;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 2000;
+      min-width: 150px;
+      padding: 4px 0;
+    }
+
+    .context-menu-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .context-menu-item:hover {
+      background: var(--hover-bg);
+    }
+
+    .context-menu-item.danger {
+      color: #ef4444;
+    }
+
+    .loading {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: 20px;
+    }
+
+    .empty-tip {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 40px 20px;
+    }
+
+    .error-tip {
+      color: var(--error-color);
+      padding: 12px;
+      background-color: rgba(239, 68, 68, 0.1);
+      border-radius: 8px;
+      margin: 12px;
+    }
+
+    .status-message {
+      color: var(--text-secondary);
+      padding: 12px;
+      background-color: var(--bg-tertiary);
+      border-radius: 8px;
+    }
+
+    .success-message {
+      color: #10b981;
+      padding: 12px;
+      background-color: rgba(16, 185, 129, 0.1);
+      border-radius: 8px;
+    }
+
+    .input-container {
+      padding: 16px 24px 24px;
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .input-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .input-box {
+      flex: 1;
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: var(--text-primary);
+      font-size: 15px;
+      font-family: inherit;
+      resize: none;
+      max-height: 200px;
+      min-height: 48px;
+      line-height: 1.5;
+    }
+
+    .input-box:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .input-box::placeholder {
+      color: var(--text-muted);
+    }
+
+    .send-btn, .stop-btn {
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .send-btn {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .send-btn:hover:not(:disabled) {
+      background-color: var(--accent-hover);
+    }
+
+    .send-btn:disabled {
+      background-color: var(--bg-tertiary);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    .stop-btn {
+      background-color: var(--error-color);
+      color: white;
+    }
+
+    .stop-btn:hover {
+      background-color: #dc2626;
+    }
+
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .empty-state p {
+      font-size: 14px;
+    }
+
+    .status-bar {
+      padding: 8px 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      display: none;
+    }
+
+    .status-bar.active {
+      display: block;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🔬</div>
+      <span>TaskMate</span>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <button class="new-chat-btn" onclick="document.getElementById('pdf-upload').click()" style="background-color: #10b981;">📁 上传PDF</button>
+      <button class="new-chat-btn" onclick="openLibraryPanel()" style="background-color: #6366f1;">📚 文献管理</button>
+      <button class="new-chat-btn" onclick="newConversation()">新对话</button>
+      <input type="file" id="pdf-upload" accept=".pdf" style="display: none;" onchange="handlePdfUpload(event)">
+    </div>
+  </header>
+
+  <div id="chat-container">
+    <div class="empty-state">
+      <h2>你好，我是 TaskMate</h2>
+      <p>我可以帮你管理任务、搜索论文、阅读文献</p>
+    </div>
+  </div>
+
+  <div class="status-bar" id="status-bar"></div>
+
+  <div class="input-container">
+    <div class="input-wrapper">
+      <textarea 
+        class="input-box" 
+        id="user-input" 
+        placeholder="输入消息..." 
+        rows="1"
+        onkeydown="handleKeyDown(event)"
+      ></textarea>
+      <button class="send-btn" id="send-btn" onclick="sendMessage()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+      <button class="stop-btn" id="stop-btn" onclick="stopGenerating()" style="display: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let messages = [];
+    let isGenerating = false;
+    let currentAbortController = null;
+    let currentAiMessageIndex = -1;
+
+    function handleKeyDown(event) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function adjustTextareaHeight() {
+      const textarea = document.getElementById('user-input');
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
+    }
+
+    document.getElementById('user-input').addEventListener('input', adjustTextareaHeight);
+
+    function newConversation() {
+      fetch('/api/clear-session', { method: 'POST' })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data.message);
+        })
+        .catch(err => console.error('Error:', err));
+      
+      messages = [];
+      document.getElementById('chat-container').innerHTML = `
+        <div class="empty-state">
+          <h2>你好，我是 TaskMate</h2>
+          <p>我可以帮你管理任务、搜索论文、阅读文献</p>
+        </div>
+      `;
+      hideStatus();
+    }
+
+    function showStatus(text) {
+      const statusBar = document.getElementById('status-bar');
+      statusBar.textContent = text;
+      statusBar.classList.add('active');
+    }
+
+    function hideStatus() {
+      document.getElementById('status-bar').classList.remove('active');
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('user-input');
+      const content = input.value.trim();
+      
+      if (!content || isGenerating) return;
+
+      messages.push({ role: 'user', content });
+      input.value = '';
+      input.style.height = 'auto';
+
+      renderUserMessage(content);
+      renderAiMessagePlaceholder();
+
+      document.getElementById('send-btn').style.display = 'none';
+      document.getElementById('stop-btn').style.display = 'flex';
+      isGenerating = true;
+
+      await streamChat();
+    }
+
+    function renderUserMessage(content) {
+      const container = document.getElementById('chat-container');
+      const emptyState = container.querySelector('.empty-state');
+      if (emptyState) {
+        container.removeChild(emptyState);
+      }
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message user';
+      messageDiv.innerHTML = `
+        <div class="message-icon">👤</div>
+        <div class="message-content">${escapeHtml(content)}</div>
+      `;
+      container.appendChild(messageDiv);
+      scrollToBottom();
+    }
+
+    function renderAiMessagePlaceholder() {
+      const container = document.getElementById('chat-container');
+      currentAiMessageIndex = messages.length;
+      
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message assistant';
+      messageDiv.id = 'ai-message-' + currentAiMessageIndex;
+      messageDiv.innerHTML = `
+        <div class="message-icon">🤖</div>
+        <div class="ai-message-card">
+          <div class="thinking-section">
+            <div class="thinking-header" onclick="toggleThinking(this)">
+              <span class="toggle-icon">▼</span>
+              <span>思考过程 💭</span>
+            </div>
+            <div class="thinking-content" id="thinking-${currentAiMessageIndex}"></div>
+          </div>
+          <div class="content-section">
+            <div class="content-header">回答 ✨</div>
+            <div class="content-body" id="content-${currentAiMessageIndex}">
+              <div class="typing-indicator">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(messageDiv);
+      scrollToBottom();
+    }
+
+    function toggleThinking(header) {
+      header.classList.toggle('collapsed');
+      const content = header.nextElementSibling;
+      content.classList.toggle('hidden');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    async function streamChat() {
+      const thinkingEl = document.getElementById('thinking-' + currentAiMessageIndex);
+      const contentEl = document.getElementById('content-' + currentAiMessageIndex);
+      
+      currentAbortController = new AbortController();
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages }),
+          signal: currentAbortController.signal
+        });
+
+        if (!response.ok) {
+          throw new Error('请求失败: ' + response.status);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let reasoningContent = '';
+        let finalContent = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                
+                if (data.type === 'reasoning') {
+                  reasoningContent += data.content;
+                  thinkingEl.textContent = reasoningContent;
+                  scrollToBottom();
+                } else if (data.type === 'content') {
+                  finalContent += data.content;
+                  contentEl.textContent = finalContent;
+                  scrollToBottom();
+                } else if (data.type === 'done') {
+                  break;
+                } else if (data.type === 'error') {
+                  thinkingEl.textContent += '\n\n错误: ' + data.content;
+                }
+              } catch (e) {
+                console.error('Parse error:', e);
+              }
+            }
+          }
+        }
+
+        messages.push({ role: 'assistant', reasoning: reasoningContent, content: finalContent });
+
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          thinkingEl.textContent += '\n\n[已中止]';
+        } else {
+          thinkingEl.textContent += '\n\n错误: ' + error.message;
+        }
+      } finally {
+        isGenerating = false;
+        document.getElementById('send-btn').style.display = 'flex';
+        document.getElementById('stop-btn').style.display = 'none';
+        currentAbortController = null;
+      }
+    }
+
+    async function stopGenerating() {
+      if (currentAbortController) {
+        currentAbortController.abort();
+        
+        try {
+          await fetch('/api/abort', { method: 'POST' });
+        } catch (e) {}
+      }
+    }
+
+    function scrollToBottom() {
+      const container = document.getElementById('chat-container');
+      container.scrollTop = container.scrollHeight;
+    }
+
+    async function handlePdfUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        alert('请选择 PDF 文件');
+        return;
+      }
+      
+      const formData = new FormData();
+      formData.append('pdf', file);
+      
+      try {
+        const response = await fetch('/api/papers/upload', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          alert('PDF 文件上传成功！\n文件: ' + data.fileName);
+        } else {
+          alert('上传失败: ' + data.error);
+        }
+      } catch (e) {
+        alert('上传失败: ' + e.message);
+      }
+      
+      event.target.value = '';
+    }
+
+    async function openLibraryPanel() {
+      const existingPanel = document.getElementById('library-panel');
+      if (existingPanel) {
+        return;
+      }
+      
+      const panel = document.createElement('div');
+      panel.id = 'library-panel';
+      panel.className = 'library-panel';
+      panel.innerHTML = `
+        <div class="library-panel-header">
+          <h2>📚 文献管理</h2>
+          <button class="library-close-btn" onclick="closeLibraryPanel()">✕</button>
+        </div>
+        <div class="library-toolbar">
+          <input type="text" id="library-search" class="library-search" placeholder="搜索论文..." oninput="filterLibrary()">
+        </div>
+        <div id="library-content" class="library-content">
+          <div class="loading">加载中...</div>
+        </div>
+      `;
+      document.body.appendChild(panel);
+      
+      setTimeout(() => {
+        panel.classList.add('show');
+      }, 10);
+      
+      loadLibrary();
+      
+      document.addEventListener('click', hideContextMenu);
+    }
+
+    function closeLibraryPanel() {
+      const panel = document.getElementById('library-panel');
+      if (panel) {
+        panel.classList.remove('show');
+        setTimeout(() => {
+          panel.remove();
+        }, 300);
+      }
+      document.removeEventListener('click', hideContextMenu);
+    }
+
+    let allPapers = [];
+
+    async function loadLibrary() {
+      const contentEl = document.getElementById('library-content');
+      try {
+        const response = await fetch('/api/papers/list');
+        const data = await response.json();
+        
+        if (data.success && data.papers && data.papers.length > 0) {
+          allPapers = data.papers;
+          renderLibrary(allPapers);
+        } else {
+          contentEl.innerHTML = '<div class="empty-tip">文献库为空，请上传 PDF 文件</div>';
+        }
+      } catch (e) {
+        contentEl.innerHTML = '<div class="error-tip">加载失败: ' + e.message + '</div>';
+      }
+    }
+
+    function renderLibrary(papers) {
+      const contentEl = document.getElementById('library-content');
+      if (papers.length === 0) {
+        contentEl.innerHTML = '<div class="empty-tip">没有找到匹配的论文</div>';
+        return;
+      }
+      
+      let html = '';
+      for (const paper of papers) {
+        html += `
+          <div class="library-item" oncontextmenu="showContextMenu(event, '${paper.fileName.replace(/'/g, "\\'")}')">
+            <div class="library-item-icon">📄</div>
+            <div class="library-item-info">
+              <div class="library-item-title">${paper.title || paper.fileName}</div>
+              <div class="library-item-meta">${paper.arxivId ? 'arXiv: ' + paper.arxivId : paper.fileName}</div>
+            </div>
+            <div class="library-item-actions">
+              <button class="library-action-btn" onclick="openInExplorer('${paper.filePath.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}')" title="打开所在文件夹">📁</button>
+              <button class="library-action-btn" onclick="aiRenamePaper('${paper.fileName.replace(/'/g, "\\'")}')" title="AI重命名">🤖</button>
+            </div>
+          </div>
+        `;
+      }
+      contentEl.innerHTML = html;
+    }
+
+    function filterLibrary() {
+      const search = document.getElementById('library-search').value.toLowerCase();
+      const filtered = allPapers.filter(p => 
+        (p.title && p.title.toLowerCase().includes(search)) ||
+        (p.fileName && p.fileName.toLowerCase().includes(search)) ||
+        (p.arxivId && p.arxivId.toLowerCase().includes(search))
+      );
+      renderLibrary(filtered);
+    }
+
+    function showContextMenu(event, fileName) {
+      event.preventDefault();
+      hideContextMenu();
+      
+      const menu = document.createElement('div');
+      menu.className = 'context-menu';
+      menu.innerHTML = `
+        <div class="context-menu-item" onclick="openInExplorerByName('${fileName.replace(/'/g, "\\'")}')">📁 在文件资源管理器中打开</div>
+        <div class="context-menu-item" onclick="aiRenamePaperByName('${fileName.replace(/'/g, "\\'")}')">🤖 AI重命名</div>
+        <div class="context-menu-item danger" onclick="deletePaperByName('${fileName.replace(/'/g, "\\'")}')">🗑️ 删除</div>
+      `;
+      
+      menu.style.left = event.pageX + 'px';
+      menu.style.top = event.pageY + 'px';
+      
+      document.body.appendChild(menu);
+      
+      setTimeout(() => {
+        menu._hideTimer = setTimeout(hideContextMenu, 3000);
+      }, 100);
+    }
+
+    function hideContextMenu() {
+      const menus = document.querySelectorAll('.context-menu');
+      menus.forEach(m => m.remove());
+    }
+
+    function openInExplorerByName(fileName) {
+      hideContextMenu();
+      fetch('/api/papers/open-folder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileName })
+      });
+    }
+
+    function openInExplorer(filePath) {
+      fetch('/api/papers/open-folder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filePath })
+      });
+    }
+
+    async function aiRenamePaperByName(fileName) {
+      hideContextMenu();
+      await aiRenamePaper(fileName);
+    }
+
+    async function aiRenamePaper(fileName) {
+      if (!confirm('是否使用 AI 自动重命名此论文？')) return;
+      
+      try {
+        const response = await fetch('/api/papers/ai-rename', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fileName })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          alert('重命名成功！\n新名称: ' + data.newName);
+          loadLibrary();
+        } else {
+          alert('重命名失败: ' + data.error);
+        }
+      } catch (e) {
+        alert('重命名失败: ' + e.message);
+      }
+    }
+
+    async function deletePaperByName(fileName) {
+      hideContextMenu();
+      
+      if (!confirm('确定要删除此论文吗？此操作不可恢复。')) return;
+      
+      try {
+        const response = await fetch('/api/papers/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fileName })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          alert('删除成功');
+          loadLibrary();
+        } else {
+          alert('删除失败: ' + data.error);
+        }
+      } catch (e) {
+        alert('删除失败: ' + e.message);
+      }
+    }
+  </script>
+</body>
+</html>

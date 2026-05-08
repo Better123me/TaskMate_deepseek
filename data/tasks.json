@@ -1,0 +1,243 @@
+{
+  "tasks": {
+    "mov9gmi1": {
+      "title": "完成本周日程整理",
+      "project": "个人管理",
+      "priority": 3,
+      "dueDate": "2026-05-10",
+      "description": "整理本周（5月4日-5月10日）的工作和科研日程，回顾已完成事项，规划下周任务",
+      "id": "mov9gmi1",
+      "createdAt": "2026-05-07T09:05:29.833Z"
+    },
+    "mow8ock8": {
+      "title": "完成深度学习实验报告",
+      "project": "深度学习",
+      "priority": 5,
+      "dueDate": "2026-05-08",
+      "description": "今天晚上8点之前把深度学习实验的报告做完",
+      "id": "mow8ock8",
+      "createdAt": "2026-05-08T01:31:16.760Z"
+    },
+    "mow8p6xb": {
+      "title": "看完认知科学课程PPT",
+      "project": "认知科学",
+      "priority": 4,
+      "dueDate": "2026-05-09",
+      "description": "周六中午之前把认知科学的课程PPT全部看完",
+      "id": "mow8p6xb",
+      "createdAt": "2026-05-08T01:31:56.111Z"
+    },
+    "mow8sjjm": {
+      "title": "六级复习冲刺计划",
+      "project": "英语六级",
+      "priority": 5,
+      "dueDate": "2026-06-13",
+      "description": "36天六级复习冲刺计划，涵盖词汇、听力、阅读、写作、翻译五大模块",
+      "id": "mow8sjjm",
+      "createdAt": "2026-05-08T01:34:32.434Z"
+    },
+    "mow8unxt": {
+      "title": "六级冲刺 Day1（5/8 周五）：高频词汇500词 + 听力真题1套（精听）",
+      "project": "六级复习",
+      "priority": 5,
+      "dueDate": "2026-05-08",
+      "description": "1. 背诵高频词汇500词\n2. 完成听力真题1套（Section A&B 精听）\n3. 标记生词并复习",
+      "id": "mow8unxt",
+      "createdAt": "2026-05-08T01:36:11.441Z"
+    },
+    "mow8unxv": {
+      "title": "六级冲刺 Day2（5/9 周六）：词汇复习 + 阅读长难句专项训练",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-09",
+      "description": "1. 复习Day1词汇\n2. 阅读长难句专项训练（10-15句）\n3. 分析句子结构，翻译练习",
+      "id": "mow8unxv",
+      "createdAt": "2026-05-08T01:36:11.443Z"
+    },
+    "mow8unxw": {
+      "title": "六级冲刺 Day3（5/10 周日）：词汇复习 + 听力真题1套（Section A&B）",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-10",
+      "description": "1. 复习前两日词汇\n2. 听力真题1套（Section A短篇新闻 + Section B长对话）\n3. 精听并跟读",
+      "id": "mow8unxw",
+      "createdAt": "2026-05-08T01:36:11.444Z"
+    },
+    "mow8unxx": {
+      "title": "六级冲刺 Day4（5/11 周一）：词汇复习 + 仔细阅读2篇",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-11",
+      "description": "1. 复习词汇\n2. 仔细阅读2篇（计时15分钟/篇）\n3. 分析错题原因",
+      "id": "mow8unxx",
+      "createdAt": "2026-05-08T01:36:11.445Z"
+    },
+    "mow8unxz": {
+      "title": "六级冲刺 Day5（5/12 周二）：词汇复习 + 听力真题1套（Section C）",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-12",
+      "description": "1. 复习词汇\n2. 听力真题1套（Section C 讲座/讲话）\n3. 精听并记录关键词",
+      "id": "mow8unxz",
+      "createdAt": "2026-05-08T01:36:11.447Z"
+    },
+    "mow8uny0": {
+      "title": "六级冲刺 Day6（5/13 周三）：词汇复习 + 段落匹配2篇",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-13",
+      "description": "1. 复习词汇\n2. 段落匹配2篇（计时10分钟/篇）\n3. 掌握快速定位技巧",
+      "id": "mow8uny0",
+      "createdAt": "2026-05-08T01:36:11.448Z"
+    },
+    "mow8uny1": {
+      "title": "六级冲刺 Day7（5/14 周四）：词汇复习 + 翻译（中国文化类）",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-14",
+      "description": "1. 复习词汇\n2. 翻译练习（中国文化类主题）\n3. 积累常用表达和句式",
+      "id": "mow8uny1",
+      "createdAt": "2026-05-08T01:36:11.449Z"
+    },
+    "mow8uny3": {
+      "title": "六级冲刺 Day8（5/15 周五）：词汇总复习 + 听力真题1套",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-15",
+      "description": "1. 前7天词汇总复习\n2. 听力真题1套（完整版）\n3. 整理错题本",
+      "id": "mow8uny3",
+      "createdAt": "2026-05-08T01:36:11.451Z"
+    },
+    "mow8uny4": {
+      "title": "六级冲刺 Day9（5/16 周六）：写作模板整理",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-16",
+      "description": "1. 整理作文开头/结尾/过渡句模板\n2. 背诵3个万能模板\n3. 练习写1篇作文",
+      "id": "mow8uny4",
+      "createdAt": "2026-05-08T01:36:11.452Z"
+    },
+    "mow8uny5": {
+      "title": "六级冲刺 Day10（5/17 周日）：阶段测试 - 完整真题1套（计时）",
+      "project": "六级复习",
+      "priority": 5,
+      "dueDate": "2026-05-17",
+      "description": "1. 完整做一套真题（严格计时）\n2. 批改并统计各板块得分\n3. 分析薄弱环节",
+      "id": "mow8uny5",
+      "createdAt": "2026-05-08T01:36:11.453Z"
+    },
+    "mow8upoc": {
+      "title": "六级冲刺 Day11（5/18 周一）：听力强化 - 短篇新闻精听",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-18",
+      "description": "1. 短篇新闻精听3篇\n2. 逐句听写\n3. 总结新闻听力高频词汇",
+      "id": "mow8upoc",
+      "createdAt": "2026-05-08T01:36:13.692Z"
+    },
+    "mow8urco": {
+      "title": "六级冲刺 Day12（5/19 周二）：阅读强化 - 选词填空技巧",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-19",
+      "description": "1. 选词填空专项训练2篇\n2. 掌握词性判断技巧\n3. 积累固定搭配",
+      "id": "mow8urco",
+      "createdAt": "2026-05-08T01:36:15.864Z"
+    },
+    "mow8uswp": {
+      "title": "六级冲刺 Day13（5/20 周三）：写作强化 - 议论文模板背诵",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-20",
+      "description": "1. 背诵议论文模板2套\n2. 练习写1篇议论文\n3. 积累高级表达",
+      "id": "mow8uswp",
+      "createdAt": "2026-05-08T01:36:17.881Z"
+    },
+    "mow8uugy": {
+      "title": "六级冲刺 Day14（5/21 周四）：翻译强化 - 科技/经济类",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-21",
+      "description": "1. 翻译练习（科技/经济类主题）\n2. 积累专业术语表达\n3. 对比参考答案优化",
+      "id": "mow8uugy",
+      "createdAt": "2026-05-08T01:36:19.906Z"
+    },
+    "mow8uw1o": {
+      "title": "六级冲刺 Day15（5/22 周五）：真题一套（听力+阅读）",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-22",
+      "description": "1. 完成真题听力+阅读部分（计时）\n2. 批改并整理错题\n3. 分析失分原因",
+      "id": "mow8uw1o",
+      "createdAt": "2026-05-08T01:36:21.948Z"
+    },
+    "mow8uxjp": {
+      "title": "六级冲刺 Day16（5/23 周六）：听力强化 - 长对话精听",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-23",
+      "description": "1. 长对话精听3篇\n2. 逐句听写\n3. 总结对话听力技巧",
+      "id": "mow8uxjp",
+      "createdAt": "2026-05-08T01:36:23.893Z"
+    },
+    "mow8uz40": {
+      "title": "六级冲刺 Day17（5/24 周日）：阅读强化 - 仔细阅读快速定位",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-24",
+      "description": "1. 仔细阅读3篇（练习快速定位）\n2. 掌握关键词定位法\n3. 计时训练（12分钟/篇）",
+      "id": "mow8uz40",
+      "createdAt": "2026-05-08T01:36:25.920Z"
+    },
+    "mow8v0n5": {
+      "title": "六级冲刺 Day18（5/25 周一）：写作强化 - 书信/图表作文",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-25",
+      "description": "1. 背诵书信/图表作文模板\n2. 练习写1篇书信作文\n3. 积累图表描述表达",
+      "id": "mow8v0n5",
+      "createdAt": "2026-05-08T01:36:27.905Z"
+    },
+    "mow8v2cs": {
+      "title": "六级冲刺 Day19（5/26 周二）：翻译强化 - 社会热点类",
+      "project": "六级复习",
+      "priority": 4,
+      "dueDate": "2026-05-26",
+      "description": "1. 翻译练习（社会热点类主题）\n2. 积累时事表达\n3. 对比参考答案优化",
+      "id": "mow8v2cs",
+      "createdAt": "2026-05-08T01:36:30.124Z"
+    },
+    "mowkm5g5": {
+      "title": "深度学习大作业总检查",
+      "project": "深度学习课程",
+      "priority": 5,
+      "dueDate": "2026-05-08T18:00:00",
+      "description": "对深度学习大作业进行最终总检查，确保所有部分完整无误，准备提交。",
+      "id": "mowkm5g5",
+      "createdAt": "2026-05-08T07:05:29.621Z"
+    }
+  },
+  "projects": {
+    "inbox": {
+      "id": "inbox",
+      "name": "Inbox",
+      "color": "#4285F4",
+      "kind": "task",
+      "view_mode": "list"
+    },
+    "work": {
+      "id": "work",
+      "name": "Work",
+      "color": "#EA4335",
+      "kind": "task",
+      "view_mode": "list"
+    },
+    "personal": {
+      "id": "personal",
+      "name": "Personal",
+      "color": "#34A853",
+      "kind": "task",
+      "view_mode": "list"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "preferred_journals",
+  "description": "用户关注的学术期刊列表，用于论文筛选",
+  "categories": {
+    "软体机器人": [
+      { "name": "Science Robotics", "issn": "2470-9476", "type": "期刊", "impact_factor": "~27.5" },
+      { "name": "Soft Robotics", "issn": "2169-5172", "type": "期刊", "impact_factor": "~6.1" },
+      { "name": "IEEE Transactions on Robotics", "issn": "1552-3098", "type": "期刊", "impact_factor": "~10.5-12.3" },
+      { "name": "International Journal of Robotics Research", "issn": "0278-3649", "type": "期刊", "impact_factor": "" },
+      { "name": "IEEE Robotics and Automation Letters", "issn": "2377-3766", "type": "期刊", "impact_factor": "" }
+    ],
+    "光学与光子学": [
+      { "name": "Light: Science & Applications", "issn": "2047-7538", "type": "期刊", "impact_factor": "23.4" },
+      { "name": "Nature Photonics", "issn": "1749-4885", "type": "期刊", "impact_factor": "" },
+      { "name": "Advanced Optical Materials", "issn": "2195-1071", "type": "期刊", "impact_factor": "9.926" },
+      { "name": "Laser & Photonics Reviews", "issn": "1863-8880", "type": "期刊", "impact_factor": "" },
+      { "name": "Journal of Lightwave Technology", "issn": "0733-8724", "type": "期刊", "impact_factor": "" },
+      { "name": "Optics Express", "issn": "1094-4087", "type": "期刊", "impact_factor": "" },
+      { "name": "Optics Letters", "issn": "0146-9592", "type": "期刊", "impact_factor": "" },
+      { "name": "Photonics Research", "issn": "2327-9125", "type": "期刊", "impact_factor": "" }
+    ],
+    "跨学科综合": [
+      { "name": "Nature Communications", "issn": "2041-1723", "type": "期刊", "impact_factor": "~14.7-16.6" },
+      { "name": "Angewandte Chemie", "issn": "1433-7851", "type": "期刊", "impact_factor": "" },
+      { "name": "Advanced Materials", "issn": "0935-9648", "type": "期刊", "impact_factor": "" },
+      { "name": "Advanced Functional Materials", "issn": "1616-301X", "type": "期刊", "impact_factor": "" }
+    ],
+    "AI与机器学习顶会": [
+      { "name": "NeurIPS", "issn": "", "type": "会议", "impact_factor": "" },
+      { "name": "ICML", "issn": "", "type": "会议", "impact_factor": "" },
+      { "name": "ICLR", "issn": "", "type": "会议", "impact_factor": "" },
+      { "name": "AAAI", "issn": "", "type": "会议", "impact_factor": "" }
+    ],
+    "机器人顶会": [
+      { "name": "ICRA", "issn": "", "type": "会议", "impact_factor": "" },
+      { "name": "IROS", "issn": "", "type": "会议", "impact_factor": "" },
+      { "name": "CoRL", "issn": "", "type": "会议", "impact_factor": "" },
+      { "name": "RSS", "issn": "", "type": "会议", "impact_factor": "" },
+      { "name": "CVPR", "issn": "", "type": "会议", "impact_factor": "" },
+      { "name": "ICCV", "issn": "", "type": "会议", "impact_factor": "" }
+    ]
+  },
+  "all": [
+    "Science Robotics",
+    "Soft Robotics",
+    "IEEE Transactions on Robotics",
+    "International Journal of Robotics Research",
+    "IEEE Robotics and Automation Letters",
+    "Light: Science & Applications",
+    "Nature Photonics",
+    "Advanced Optical Materials",
+    "Laser & Photonics Reviews",
+    "Journal of Lightwave Technology",
+    "Optics Express",
+    "Optics Letters",
+    "Photonics Research",
+    "Nature Communications",
+    "Angewandte Chemie",
+    "Advanced Materials",
+    "Advanced Functional Materials",
+    "NeurIPS",
+    "ICML",
+    "ICLR",
+    "AAAI",
+    "ICRA",
+    "IROS",
+    "CoRL",
+    "RSS",
+    "CVPR",
+    "ICCV"
+  ]
+}
